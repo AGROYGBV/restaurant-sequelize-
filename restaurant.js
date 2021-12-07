@@ -6,6 +6,9 @@ const {sequelize, DataTypes, Model} = require('./db');
 class Restaurant extends Model {
 
     // add methods here
+    getHoursOfOperation() {
+        return [this.open_time, this.close_time].join(' - ');
+      }
 
 }
 Restaurant.init({

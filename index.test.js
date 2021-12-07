@@ -33,43 +33,50 @@ describe('Restaurant Database', () => {
 
         await Restaurant.bulkCreate(arrayOfRestaurants);
         await Menu_item.bulkCreate(arrayOfMenuItems);
+
+        // code below is for creation of singular global stubs
         // const menu =  Menu.create({ name: 'Breakfast', image: 'http://some.image1.url' })
         // const menu_item = Menu_item.create({ name: 'oatmeal', image: 'http://some.image2.url' })
         //await Restaurant.create(restaurant)
     })
-
+    
+    //test Restaurant
     test('can create a restaurant', async () => {
         const restaurant = await Restaurant.findOne({where: {name: 'Ronalds'}});
         expect(restaurant.id).toBe(1)
     })
-
     test('restaurant has name', async () => {
         const restaurant2 = await Restaurant.findOne({where: {name: 'Ravens'}});
         expect(restaurant2.name).toBe('Ravens')
     })
-
     test('restaurant has start time', async () => {
         const restaurant3 = await Restaurant.findOne({where: {name: 'Martins'}});
         expect(restaurant3.open_time).toEqual(11)
     })
-
     test('restaurant has rating', async () => {
         const restaurant3 = await Restaurant.findOne({where: {name: 'Martins'}});
         expect(restaurant3.rating).toEqual(4.5)
     })
-
     test('restaurant has location', async () => {
         const restaurant4 = await Restaurant.findOne({where: {name: 'Amandas'}});
         expect(restaurant4.location).toBe('645 Lovely Rd')
     })
 
-
+    //test Menu
     test('can create a menu', async () => {
         expect(menu.id).toBe(1)
     })
 
+    //test Menu_item
     test('can create a menu item', async () => {
         const menu_item = await Menu_item.findOne({where: {name: 'oatmeal'}})
         expect(menu_item.id).toBe(1)
     })
+
+    //close sequelize
+    afterAll(async()=> {
+        // await sequelize.sync({force:true})
+        sequelize.close()
+    })
+
 })
